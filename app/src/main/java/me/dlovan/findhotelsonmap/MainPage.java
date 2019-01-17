@@ -50,12 +50,19 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
+        //Jyan Hotel
         mMap.addMarker(new MarkerOptions()
                 .title("Jyan Hotel")
                 .position(new LatLng(36.8692589, 42.9990615))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .flat(true)
-        );
+                .flat(true));
+        //Jotyar Hotel
+        mMap.addMarker(new MarkerOptions()
+                .title("Jyan Hotel")
+                .position(new LatLng(36.855332, 43.000852))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                .flat(true));
+
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.868358, 42.955613), 18));
 
         locationListener = new LocationListener() {
