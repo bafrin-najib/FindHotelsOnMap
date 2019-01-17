@@ -42,6 +42,8 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
     private LocationManager locationManager;
     private LocationListener locationListener;
     private FloatingActionButton btnAddHote;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,15 +54,18 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         btnAddHote = findViewById(R.id.AddButtonID);
+
         btnAddHote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainPage.this, AddingHotels.class));
+
 //                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,7 +92,17 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
     public void onMapReady(GoogleMap googleMap) {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mMap = googleMap;
-        // Customise the styling of the base map using a JSON object defined
+
+        //TODO:  Solving marker to add database
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng point) {
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(point));
+            }
+        });
+
+
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_jason));
         mMap.setOnMarkerClickListener(this);
         //Jyan Hotel
@@ -102,6 +117,7 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
                 .position(new LatLng(36.855332, 43.000852))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
         );
+
         //initializing center of map
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.868358, 42.955613), 10));
 
@@ -195,12 +211,7 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
 
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
 
-        Toast.makeText(this, "Marker Clicked Tag: " + marker.getTag(), Toast.LENGTH_SHORT).show();
-        return false;
-    }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
@@ -208,4 +219,19 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
                 Toast.LENGTH_SHORT
         ).show();
     }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        Toast.makeText(this, "Marker Clicked Tag: " + marker.getTag(), Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
 }
