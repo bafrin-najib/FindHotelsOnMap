@@ -76,8 +76,7 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
 
                         Log.d("Address: ", addressList.get(0).toString());
 
-//                        Toast.makeText(MapsActivity.this, addressList.get(0).getAddressLine(0), Toast.LENGTH_LONG)
-//                                .show();
+                        Toast.makeText(MainPage.this, addressList.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
 
                         if (addressList.get(0).getAddressLine(0) != null) {
                             fullAddress += addressList.get(0).getAddressLine(0) + " ";
