@@ -45,50 +45,34 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
         mMap = googleMap;
-
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 Log.d("My Locations: ", location.toString());
                 mMap.clear(); // clears our map
-
-                // mMap.addMarker(new MarkerOptions().position(location.getLatitude(), location.getLongitude(), 1));
-
-                // Add a marker in Sydney and move the camera
                 LatLng newLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(newLocation).title("New Location"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 10));
 
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 10));
                 Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
                 try {
                     List<Address> addressList = geocoder.getFromLocation(location.getLatitude(),
                             location.getLongitude(), 1
                     );
-
                     String fullAddress = "";
-
                     if (addressList != null && addressList.size() > 0) {
-
                         Log.d("Address: ", addressList.get(0).toString());
-
                         Toast.makeText(MainPage.this, addressList.get(0).getAddressLine(0), Toast.LENGTH_LONG).show();
-
                         if (addressList.get(0).getAddressLine(0) != null) {
                             fullAddress += addressList.get(0).getAddressLine(0) + " ";
-
                         }
                         if (addressList.get(0).getSubAdminArea() != null) {
                             fullAddress += addressList.get(0).getSubAdminArea() + " ";
                         }
-
                         Toast.makeText(MainPage.this, "Address+" + fullAddress, Toast.LENGTH_LONG).show();
-
-
                     } else {
                         Log.d("Address:", "Couldn't find Address");
                     }
@@ -135,7 +119,6 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -153,5 +136,6 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
         }
 
     }
+
 
 }
