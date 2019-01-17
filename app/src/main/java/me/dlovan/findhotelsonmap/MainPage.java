@@ -2,7 +2,6 @@ package me.dlovan.findhotelsonmap;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -52,22 +51,8 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
     public void onMapReady(GoogleMap googleMap) {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mMap = googleMap;
-
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            boolean success = mMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_jason));
-
-            if (!success) {
-                Log.e(TAG, "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e(TAG, "Can't find style. Error: ", e);
-        }
-
-
+        // Customise the styling of the base map using a JSON object defined
+        mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_jason));
         mMap.setOnMarkerClickListener(this);
         //Jyan Hotel
         mMap.addMarker(new MarkerOptions()
@@ -81,8 +66,8 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
                 .position(new LatLng(36.855332, 43.000852))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
                 .flat(true));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.868358, 42.955613), 18));
+        //initializing center of map
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.868358, 42.955613), 10));
 
         locationListener = new LocationListener() {
             @Override
