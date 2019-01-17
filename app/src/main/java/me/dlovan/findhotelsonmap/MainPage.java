@@ -88,6 +88,7 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
 
                         Toast.makeText(MainPage.this, "Address+" + fullAddress, Toast.LENGTH_LONG).show();
 
+
                     } else {
                         Log.d("Address:", "Couldn't find Address");
                     }
