@@ -20,14 +20,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MainPage extends FragmentActivity implements OnMapReadyCallback {
+public class MainPage extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap mMap;
     private LocationManager locationManager;
@@ -47,6 +49,15 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
+        mMap.addMarker(new MarkerOptions()
+                .title("Jyan Hotel")
+                .position(new LatLng(36.8692589, 42.9990615))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                .flat(true)
+        );
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.868358, 42.955613), 18));
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -137,5 +148,17 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
 
+        Toast.makeText(this, "Marker Clicked Tag: " + marker.getTag(), Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT
+        ).show();
+    }
 }
