@@ -87,8 +87,7 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback {
                             fullAddress += addressList.get(0).getSubAdminArea() + " ";
                         }
 
-                        Toast.makeText(MainPage.this, "Address+" + fullAddress, Toast.LENGTH_LONG)
-                                .show();
+                        Toast.makeText(MainPage.this, "Address+" + fullAddress, Toast.LENGTH_LONG).show();
 
                     } else {
                         Log.d("Address:", "Couldn't find Address");
