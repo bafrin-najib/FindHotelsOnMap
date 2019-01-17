@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">FindHotelsOnMap</string>
+    <string name="app_name">Duhok Hotels Finder</string>
     <string name="title_activity_main_page">Map</string>
+    <string name="item1">Item1</string>
+
+    <string name="add_hotel">Add Hotel</string>
+    <string name="title_activity_adding_hotels">AddingHotels</string>
+
 </resources>

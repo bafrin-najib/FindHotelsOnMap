@@ -1,6 +1,7 @@
 package me.dlovan.findhotelsonmap;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,10 +11,15 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,17 +41,47 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
     private GoogleMap mMap;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private String TAG;
-
+    private FloatingActionButton btnAddHote;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        btnAddHote = findViewById(R.id.AddButtonID);
+        btnAddHote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainPage.this, AddingHotels.class));
+//                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+            }
+        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflate = getMenuInflater();
+        inflate.inflate(R.menu.option_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add:
+                Toast.makeText(this, "Add1 Clicked", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.add1:
+                Toast.makeText(this, "Add1 Clicked", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -59,13 +95,13 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
                 .title("Jyan Hotel")
                 .position(new LatLng(36.8692589, 42.9990615))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .flat(true));
+        );
         //Jotyar Hotel
         mMap.addMarker(new MarkerOptions()
                 .title("Jyan Hotel")
                 .position(new LatLng(36.855332, 43.000852))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .flat(true));
+        );
         //initializing center of map
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.868358, 42.955613), 10));
 
