@@ -16,9 +16,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,12 +24,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,11 +42,20 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
     private LocationListener locationListener;
     private FloatingActionButton btnAddHote;
     private Double lat, lng;
+    public List<Hotels> listHotels;
+    Boolean isMarker;
+    Boolean MarkerSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+        listHotels = new ArrayList<Hotels>();
+        isMarker = false; //for adding new marker
+        MarkerSet = false;
+        listHotels.add(new Hotels(1, "Jian", "Gali St. Duhok", "09647503089977", 36.855332, 43.000852));
+        listHotels.add(new Hotels(2, "Jotyar", "Grebase St. Duhok", "0964750449977", 36.851332, 43.003852));
+        listHotels.add(new Hotels(3, "Zaxo", "Zaxo St. Duhok", "09647503089877", 36.855332, 43.010852));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -58,67 +66,65 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
         btnAddHote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addIntent = new Intent(MainPage.this, AddingHotels.class);
-                addIntent.putExtra("LAT", lat);
-                addIntent.putExtra("LNG", lng);
-                startActivity(addIntent);
+
+                if (MarkerSet) {
+                    Intent addIntent = new Intent(MainPage.this, AddingHotels.class);
+                    addIntent.putExtra("LAT", lat);
+                    addIntent.putExtra("LNG", lng);
+                    startActivity(addIntent);
 
 //                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+
+
+                }
+                isMarker = true;
             }
         });
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflate = getMenuInflater();
-        inflate.inflate(R.menu.option_menu, menu);
-        return true;
-    }
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add:
-                Toast.makeText(this, "Add1 Clicked", Toast.LENGTH_LONG).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         mMap = googleMap;
 
+
         //TODO:  Solving marker to add database
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng point) {
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(point));
-                lat = point.latitude;
-                lng = point.longitude;
+                if (isMarker) {
+                    mMap.clear();
+                    mMap.addMarker(new MarkerOptions().position(point)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+                    mMap.addCircle(new CircleOptions()
+                            .center(point)
+                            .strokeColor(getResources().getColor(R.color.colorAccent))
+                            .strokeWidth(5)
+                            .radius(40)
+                    );
+                    lat = point.latitude;
+                    lng = point.longitude;
+                    MarkerSet = true;
+                } else {
+                    Toast.makeText(MainPage.this, "Click add icon to add", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
 
         mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.style_jason));
         mMap.setOnMarkerClickListener(this);
-        //Jyan Hotel
-        mMap.addMarker(new MarkerOptions()
-                .title("Jyan Hotel")
-                .position(new LatLng(36.8692589, 42.9990615))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-        );
-        //Jotyar Hotel
-        mMap.addMarker(new MarkerOptions()
-                .title("Jyan Hotel")
-                .position(new LatLng(36.855332, 43.000852))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-        );
+
+        //set markers for each hotel
+        for (Hotels h : listHotels) {
+            mMap.addMarker(new MarkerOptions()
+                    .title(h.getName())
+                    .position(new LatLng(h.getLat(), h.getLng()))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+        }
+
 
         //initializing center of map
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(36.868358, 42.955613), 10));
@@ -213,22 +219,16 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
 
     }
 
-
-
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Info window clicked",
-                Toast.LENGTH_SHORT
-        ).show();
+        Toast.makeText(this, "Info window clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-        Toast.makeText(this, "Marker Clicked Tag: " + marker.getTag(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Marker Clicked Tag: " + marker.getId(), Toast.LENGTH_SHORT).show();
         return false;
     }
-
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
