@@ -42,7 +42,7 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
     private LocationManager locationManager;
     private LocationListener locationListener;
     private FloatingActionButton btnAddHote;
-
+    private Double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,10 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
         btnAddHote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainPage.this, AddingHotels.class));
+                Intent addIntent = new Intent(MainPage.this, AddingHotels.class);
+                addIntent.putExtra("LAT", lat);
+                addIntent.putExtra("LNG", lng);
+                startActivity(addIntent);
 
 //                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
@@ -96,6 +99,8 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
             public void onMapClick(LatLng point) {
                 mMap.clear();
                 mMap.addMarker(new MarkerOptions().position(point));
+                lat = point.latitude;
+                lng = point.longitude;
             }
         });
 
