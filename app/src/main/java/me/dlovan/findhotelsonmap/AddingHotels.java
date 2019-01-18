@@ -1,6 +1,7 @@
 package me.dlovan.findhotelsonmap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -49,6 +50,9 @@ public class AddingHotels extends AppCompatActivity {
                 hideKeyboard(AddingHotels.this);
                 //TODO: add info to database and return to main activity
 
+
+                //return to main activity for new one
+                startActivity(new Intent(AddingHotels.this, MainPage.class));
 /*
 
                 String message = "Hotel has been added !";
