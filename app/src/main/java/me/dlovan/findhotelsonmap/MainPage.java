@@ -79,9 +79,6 @@ public class MainPage extends FragmentActivity implements OnMapReadyCallback, Go
             case R.id.add:
                 Toast.makeText(this, "Add1 Clicked", Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.add1:
-                Toast.makeText(this, "Add1 Clicked", Toast.LENGTH_LONG).show();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

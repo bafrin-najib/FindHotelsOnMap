@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add"
-        android:title="@string/add_hotel">
-        <!-- "file" submenu -->
-        <menu>
-            <item
-                android:id="@+id/add1"
-                android:title="@string/item1" />
-            <item
-                android:id="@+id/open"
-                android:title="@string/item1" />
-        </menu>
-    </item>
+        android:icon="@android:drawable/ic_input_add"
+        android:title="@string/add_hotel"
+        app:showAsAction="always" />
+
 </menu>
