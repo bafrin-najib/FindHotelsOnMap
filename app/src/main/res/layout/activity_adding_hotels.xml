@@ -17,8 +17,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorAccent"
         android:text="@string/add_btn"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,32 +42,37 @@
 
     <EditText
         android:id="@+id/editText7"
-        android:layout_width="134dp"
+        android:layout_width="157dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:freezesText="true"
+        android:inputType="textPersonName|number"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.169"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <EditText
         android:id="@+id/editText8"
-        android:layout_width="125dp"
+        android:layout_width="158dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:freezesText="true"
+        android:inputType="textPersonName|number"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toEndOf="@+id/editText7"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText9"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
@@ -71,6 +80,7 @@
         android:ems="10"
         android:hint="Hotel Name"
         android:inputType="textPersonName"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="@+id/editText8"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="@+id/editText7"
@@ -78,26 +88,30 @@
 
     <EditText
         android:id="@+id/editText10"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPersonName"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="@+id/editText9"
         app:layout_constraintStart_toStartOf="@+id/editText9"
         app:layout_constraintTop_toBottomOf="@+id/editText9" />
 
     <EditText
         android:id="@+id/editText11"
-        android:layout_width="wrap_content"
+        android:layout_width="335dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Mobile"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:phoneNumber="true"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="@+id/editText10"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editText10"
         app:layout_constraintTop_toBottomOf="@+id/editText10" />
 </android.support.constraint.ConstraintLayout>
 
