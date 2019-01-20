@@ -6,5 +6,6 @@ This Project is University project on Finding hotels on google map and hotels in
 	<li>Finding hotels on google map</li>
   <li>Adding hotels on Map</li>
 	<li>Chosing markers for each hotels</li>
+	<li> other changes </li>
 </ul>	
 
